@@ -2,19 +2,7 @@
 import {h, html, render, Router, useEffect, useRef, useState, useCallback} from './preact-bundle.min.js';
 
 const DEFAULT_CODE =
-    `// To start, flash this ESP32 Arduino firmware, enter IP address and click connect:
-// https://github.com/cesanta/elk/blob/master/examples/Esp32JS/Esp32JS.ino
-
-let led = { pin: 26, on: 0 };  // LED state
-gpio.mode(led.pin, 2);         // Set LED pin to output mode
-
-let timer_fn = function() {
-  led.on = led.on ? 0 : 1; 
-  gpio.write(led.pin, led.on);
-};
-
-// Start a timer that toggles LED every 1000 milliseconds
-// This timer is a C resource. It is cleaned automatically on JS code refresh
+    `
 let timer_id = timer.create(1000, 'timer_fn');
 `;
 
@@ -233,7 +221,7 @@ const LogPanel = function(props) {
 };
 
 const Toolbar = function(props) {
-  const [ip, setIP] = useState(getCookie('elk-ip'));
+  const [ip, setIP] = useState(getCookie('retrovms-ip'));
   const color = props.online ? 'text-success' : 'text-danger';
   const label = props.online ? 'connected' : 'disconnected';
   const oninput = ev => setIP(ev.target.value);
@@ -248,7 +236,7 @@ const Toolbar = function(props) {
         .then(rpc => {
           props.setRPC(rpc);
           props.setOnline(true);
-          document.cookie = `elk-ip=${ip}`;
+          document.cookie = `retrovms-ip=${ip}`;
         })
         .catch(() => props.setOnline(false));
   };
@@ -276,9 +264,9 @@ const Toolbar = function(props) {
         </div>
         <div class="flex-grow-1" />
         <div class="text-light">
-          <img src="elk.svg" height="32" class="round mr-2" />
-          Elk JS, \u00a9 2021-2022 Cesanta. <a 
-            href="https://retrovms.com">Contact us</a>
+          <img src="logo.svg" height="32" class="round mr-2" />
+           \u00a9 2024 RetroVMS. <a 
+            href="https://retrovms.com">Info</a>
         </div>
     </nav>
   `;
